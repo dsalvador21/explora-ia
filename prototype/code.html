@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ExploraIA - Centro de Mando 7° Básico</title>
+<!-- Typography matching playful tech & neo-brutalist cartoon feel -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;family=Caveat:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            hand: ['"Caveat"', 'cursive'],
+          },
+          colors: {
+            brand: {
+              yellow: '#FBBF24',
+              orange: '#F97316',
+              purple: '#8B5CF6',
+              purpleSoft: '#EDE9FE',
+              teal: '#14B8A6',
+              cyan: '#38BDF8',
+              lime: '#A3E635',
+              dark: '#111827',
+              border: '#18181B',
+            }
+          },
+          boxShadow: {
+            'brutal': '4px 4px 0px #18181B',
+            'brutal-lg': '6px 6px 0px #18181B',
+            'brutal-xl': '8px 8px 0px #18181B',
+            'brutal-sm': '2.5px 2.5px 0px #18181B',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #FAFAFA;
+      color: #18181B;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    
+    /* Neo-brutalist card baseline */
+    .card-brutal {
+      background-color: #FFFFFF;
+      border: 2.5px solid #18181B;
+      border-radius: 1.5rem;
+      box-shadow: 5px 5px 0px #18181B;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-brutal:hover {
+      transform: translateY(-3px);
+      box-shadow: 7px 7px 0px #18181B;
+    }
+
+    /* Button interactions */
+    .btn-brutal {
+      border: 2px solid #18181B;
+      box-shadow: 3px 3px 0px #18181B;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .btn-brutal:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px #18181B;
+    }
+    .btn-brutal:active {
+      transform: translate(3px, 3px);
+      box-shadow: 0px 0px 0px #18181B;
+    }
+
+    /* Highlighter highlight effect like Hungry Coders */
+    .highlighter-purple {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+    }
+    .highlighter-purple::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      right: -4px;
+      bottom: 4px;
+      height: 40%;
+      background-color: #DDD6FE;
+      z-index: -1;
+      border-radius: 4px;
+    }
+
+    .highlighter-yellow {
+      position: relative;
+      display: inline-block;
+      z-index: 1;
+    }
+    .highlighter-yellow::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      right: -4px;
+      bottom: 3px;
+      height: 45%;
+      background-color: #FEF08A;
+      z-index: -1;
+      border-radius: 4px;
+    }
+
+    /* Sticker badge animations */
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(-1deg); }
+    }
+    .sticker-wiggle {
+      animation: wiggle 3.5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased flex flex-col">
+<!-- TOP NAVIGATION BAR (Hungry Coders Inspired) -->
+<header class="w-full bg-white border-b-[2.5px] border-black sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-brand-cyan border-2 border-black shadow-brutal-sm flex items-center justify-center font-black text-xl">
+<span class="material-symbols-outlined text-[26px]">smart_toy</span>
+</div>
+<div class="flex flex-col">
+<span class="font-black text-2xl tracking-tight text-black flex items-center gap-1.5 leading-none">
+            Explora<span class="text-brand-purple">IA</span>
+</span>
+<span class="text-[11px] font-mono text-zinc-500 font-bold uppercase tracking-wider">// 7° Básico</span>
+</div>
+</div>
+<!-- Center Links -->
+<nav class="hidden md:flex items-center gap-6 font-semibold text-sm">
+<a class="text-black hover:text-brand-purple flex items-center gap-1.5 transition-colors" href="#misiones">
+<span class="material-symbols-outlined text-[19px] text-brand-purple">explore</span>
+          Misiones
+        </a>
+<a class="text-zinc-600 hover:text-black flex items-center gap-1.5 transition-colors" href="#laboratorio">
+<span class="material-symbols-outlined text-[19px] text-brand-teal">science</span>
+          Laboratorio Redes
+        </a>
+<a class="text-zinc-600 hover:text-black flex items-center gap-1.5 transition-colors" href="#taller">
+<span class="material-symbols-outlined text-[19px] text-brand-orange">terminal</span>
+          Taller Prompts
+        </a>
+<a class="text-zinc-600 hover:text-black flex items-center gap-1.5 transition-colors" href="#trofeos">
+<span class="material-symbols-outlined text-[19px] text-brand-yellow">military_tech</span>
+          Vitrina
+        </a>
+</nav>
+<!-- Right Gamer Cadete Badges -->
+<div class="flex items-center gap-3">
+<!-- XP Pill -->
+<div class="hidden sm:flex items-center gap-1.5 bg-[#FEF3C7] border-2 border-black px-3 py-1 rounded-full text-xs font-mono font-bold shadow-brutal-sm">
+<span class="material-symbols-outlined text-[16px] text-brand-orange">bolt</span>
+<span>450 XP</span>
+</div>
+<!-- Racha Pill -->
+<div class="flex items-center gap-1.5 bg-orange-100 border-2 border-black px-3 py-1 rounded-full text-xs font-mono font-bold shadow-brutal-sm">
+<span class="material-symbols-outlined text-[16px] text-red-500">local_fire_department</span>
+<span>4 d racha</span>
+</div>
+<!-- User Avatar Button -->
+<button class="w-10 h-10 rounded-full border-2 border-black overflow-hidden bg-brand-purpleSoft flex items-center justify-center shadow-brutal-sm btn-brutal">
+<img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBon6I0izvZlnWjghZ_N2POJt3iMu9d-XxM0z6nu1pKVSqBFqlND-vwErx0HjBm2-pjMCzDJ0Ah8YtPFPkZ0TAvwEWz5C-bahSCdZK-h0Ytr6SDQ7Ph0srWAn2DNqQNSbvU3tNIStxtc-r4ICcMx6dKRHjVjjZ6TOdDT_9CvVA_fTSku5DzDXYobSVJgFwFfZZZqRQ55iuEJyec0GSmVHBoND5tI7poP93dnJCod5I"/>
+</button>
+</div>
+</div>
+</header>
+<!-- MAIN WRAPPER -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+<!-- HERO SECTION (Hungry Coders Style: Bold title, highlighted word, subtle dev subtext) -->
+<section class="text-center pt-4 pb-6 relative">
+<!-- Dev comment pill tag -->
+<div class="inline-flex items-center gap-2 mb-4 font-mono text-xs font-bold text-brand-purple bg-brand-purpleSoft border-2 border-black px-4 py-1.5 rounded-full shadow-brutal-sm transform -rotate-1">
+<span>// centro de mando escolar 2025</span>
+<span class="w-2 h-2 rounded-full bg-brand-purple animate-ping"></span>
+</div>
+<!-- Main Headline with lavender highlighter -->
+<h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black tracking-tight max-w-4xl mx-auto leading-tight">
+        Aprende el cerebro de la IA. <br class="hidden sm:inline"/>
+        Un camino <span class="highlighter-purple">alucinante.</span>
+</h1>
+<p class="mt-4 text-base sm:text-lg text-zinc-600 max-w-2xl mx-auto font-medium">
+        Cuatro misiones interactivas para dominar el código del futuro. Sin tecnicismos aburridos: experimentos en vivo, retos y simuladores en tu navegador.
+      </p>
+<!-- Cadete Progress Quick Capsule Banner -->
+<div class="mt-8 max-w-3xl mx-auto bg-white border-2 border-black rounded-3xl p-5 shadow-brutal flex flex-col md:flex-row items-center justify-between gap-4 text-left relative overflow-hidden">
+<!-- Floating sticker -->
+<span class="absolute -top-3 -right-2 bg-brand-yellow border-2 border-black font-hand text-base font-bold px-3 py-0.5 rounded-xl shadow-brutal-sm transform rotate-6 sticker-wiggle">
+          ¡Vas volando! 🚀
+        </span>
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-2xl bg-amber-100 border-2 border-black flex items-center justify-center flex-shrink-0 shadow-brutal-sm">
+<span class="material-symbols-outlined text-3xl text-brand-orange">military_tech</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-mono text-xs font-bold uppercase text-brand-purple">// Nivel 3 alcanzado</span>
+<span class="bg-zinc-100 border border-black text-[10px] font-bold px-2 py-0.2 rounded-full">Aprendiz Neuronal</span>
+</div>
+<div class="text-lg font-black text-black">Misión Diaria: Entrena perros vs gatos</div>
+<div class="text-xs text-zinc-500 font-medium">Progreso total: 65% • Faltan 150 XP para nivel 4</div>
+</div>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto justify-end">
+<div class="w-28 bg-zinc-100 h-3 rounded-full border-2 border-black overflow-hidden hidden sm:block">
+<div class="bg-brand-yellow h-full w-[65%] border-r-2 border-black"></div>
+</div>
+<button class="btn-brutal bg-brand-yellow text-black font-bold px-5 py-2.5 rounded-2xl text-sm flex items-center gap-2">
+<span>Continuar</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 1: MAPA DE MISIONES (Neo-Brutalist 4 Course Cards like Hungry Coders) -->
+<section class="space-y-6" id="misiones">
+<!-- Section header with Mono code badge -->
+<div class="text-center space-y-2">
+<span class="font-mono text-xs font-bold text-brand-purple uppercase tracking-wider">// 01 - elige tu misión</span>
+<h2 class="text-3xl sm:text-4xl font-black text-black tracking-tight">
+          Elige tu <span class="highlighter-yellow">ruta de aprendizaje</span>
+</h2>
+<p class="text-sm sm:text-base text-zinc-600 max-w-xl mx-auto">
+          Cada estación te da experiencia práctica directa. Supera los retos para desbloquear insignias secretas.
+        </p>
+</div>
+<!-- Grid of Cards (Inspired directly by Hungry Coders 3-column & sticker arrangement) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
+<!-- Card 1: ¿Qué es la IA? -->
+<div class="card-brutal p-6 flex flex-col justify-between relative group">
+<!-- Hand-drawn sticker badge top right -->
+<div class="absolute -top-3.5 -right-2 bg-emerald-300 border-2 border-black px-2.5 py-0.5 rounded-xl font-hand font-bold text-sm shadow-brutal-sm transform rotate-3">
+            ¡80% listo!
+          </div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<!-- Rounded squircle icon container with black stroke -->
+<div class="w-14 h-14 rounded-2xl bg-amber-200 border-2 border-black flex items-center justify-center shadow-brutal-sm">
+<span class="material-symbols-outlined text-3xl text-zinc-900">smart_toy</span>
+</div>
+<span class="font-mono text-xs font-bold text-zinc-500">// 01</span>
+</div>
+<h3 class="text-xl font-black text-black leading-snug mb-2">
+              ¿Qué es y qué NO es la IA?
+            </h3>
+<p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+              Distingue entre un simple personaje de videojuego y un verdadero auto inteligente con visión por computadora.
+            </p>
+</div>
+<div class="pt-6 mt-4 border-t-2 border-dashed border-zinc-200 flex flex-col gap-3">
+<div class="flex items-center justify-between text-xs font-mono font-bold text-zinc-500">
+<span>Estado: En Progreso</span>
+<span class="text-brand-purple">80%</span>
+</div>
+<a class="btn-brutal bg-white hover:bg-zinc-50 text-black font-extrabold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 text-center" href="#laboratorio">
+<span>Continuar Lección</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 2: El Gran Laboratorio (Highlighted as Popular / Featured) -->
+<div class="card-brutal p-6 flex flex-col justify-between relative group border-[3px] border-black bg-gradient-to-b from-white to-purple-50/40">
+<!-- Sticker badge -->
+<div class="absolute -top-3.5 -right-2 bg-brand-orange text-white border-2 border-black px-3 py-0.5 rounded-xl font-hand font-bold text-sm shadow-brutal-sm transform -rotate-3 sticker-wiggle">
+            ¡Favorito! 🔥
+          </div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-14 h-14 rounded-2xl bg-sky-200 border-2 border-black flex items-center justify-center shadow-brutal-sm">
+<span class="material-symbols-outlined text-3xl text-zinc-900">visibility</span>
+</div>
+<span class="font-mono text-xs font-bold text-brand-purple">// 02 Interactivo</span>
+</div>
+<h3 class="text-xl font-black text-black leading-snug mb-2">
+              El Laboratorio: Entrena a tu Bot
+            </h3>
+<p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+              Crea tu primer clasificador visual y enseña a la máquina a reconocer objetos de clase mediante muestras.
+            </p>
+</div>
+<div class="pt-6 mt-4 border-t-2 border-dashed border-zinc-200 flex flex-col gap-3">
+<div class="flex items-center justify-between text-xs font-mono font-bold text-zinc-500">
+<span>Recompensa</span>
+<span class="text-brand-orange font-black">+180 XP</span>
+</div>
+<a class="btn-brutal bg-brand-purple text-white font-extrabold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 text-center" href="#laboratorio">
+<span>Abrir Simulador</span>
+<span class="material-symbols-outlined text-sm">play_circle</span>
+</a>
+</div>
+</div>
+<!-- Card 3: Taller de Prompts -->
+<div class="card-brutal p-6 flex flex-col justify-between relative group">
+<!-- Sticker badge -->
+<div class="absolute -top-3.5 -right-2 bg-brand-yellow border-2 border-black px-2.5 py-0.5 rounded-xl font-hand font-bold text-sm shadow-brutal-sm transform rotate-4">
+            ¡Creativo!
+          </div>
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-14 h-14 rounded-2xl bg-purple-200 border-2 border-black flex items-center justify-center shadow-brutal-sm">
+<span class="material-symbols-outlined text-3xl text-zinc-900">terminal</span>
+</div>
+<span class="font-mono text-xs font-bold text-zinc-500">// 03</span>
+</div>
+<h3 class="text-xl font-black text-black leading-snug mb-2">
+              El Taller de Prompts Mágicos
+            </h3>
+<p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+              Aprende a comunicarte con los modelos de lenguaje (LLM). Aplica la fórmula mágica y evita respuestas aburridas.
+            </p>
+</div>
+<div class="pt-6 mt-4 border-t-2 border-dashed border-zinc-200 flex flex-col gap-3">
+<div class="flex items-center justify-between text-xs font-mono font-bold text-zinc-500">
+<span>Recompensa</span>
+<span class="text-brand-orange font-black">+160 XP</span>
+</div>
+<a class="btn-brutal bg-white hover:bg-zinc-50 text-black font-extrabold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 text-center" href="#taller">
+<span>Practicar Prompts</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Card 4: Superpoderes & Ética -->
+<div class="card-brutal p-6 flex flex-col justify-between relative group">
+<div>
+<div class="flex items-center justify-between mb-4">
+<div class="w-14 h-14 rounded-2xl bg-lime-200 border-2 border-black flex items-center justify-center shadow-brutal-sm">
+<span class="material-symbols-outlined text-3xl text-zinc-900">shield</span>
+</div>
+<span class="font-mono text-xs font-bold text-zinc-500">// 04</span>
+</div>
+<h3 class="text-xl font-black text-black leading-snug mb-2">
+              Superpoderes &amp; Ética Digital
+            </h3>
+<p class="text-xs sm:text-sm text-zinc-600 leading-relaxed">
+              Detecta noticias falsas (deepfakes), sesgos en los datos y protege tu privacidad de forma segura.
+            </p>
+</div>
+<div class="pt-6 mt-4 border-t-2 border-dashed border-zinc-200 flex flex-col gap-3">
+<div class="flex items-center justify-between text-xs font-mono font-bold text-zinc-500">
+<span>Recompensa</span>
+<span class="text-brand-orange font-black">+200 XP</span>
+</div>
+<button class="btn-brutal bg-zinc-100 text-zinc-700 font-extrabold text-xs py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 text-center">
+<span>Iniciar Desafío</span>
+<span class="material-symbols-outlined text-sm">lock_open</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: INTERACTIVE MINI-LAB: ¿CÓMO APRENDE UNA IA? -->
+<section class="space-y-6 pt-4" id="laboratorio">
+<div class="text-center space-y-2">
+<span class="font-mono text-xs font-bold text-brand-teal uppercase tracking-wider">// 02 - simulador didáctico v2.4</span>
+<h2 class="text-3xl sm:text-4xl font-black text-black tracking-tight">
+          Mini-Laboratorio: <span class="highlighter-purple">¿Cómo aprende una IA?</span>
+</h2>
+<p class="text-sm sm:text-base text-zinc-600 max-w-xl mx-auto">
+          Compara el método tradicional de reglas fijas contra el aprendizaje por ejemplos de las redes neuronales.
+        </p>
+</div>
+<!-- Two-column neo-brutalist comparison container -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+<!-- Left: Reglas Fijas (Old way) -->
+<div class="lg:col-span-5 card-brutal p-6 flex flex-col justify-between bg-zinc-50">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="font-mono text-xs font-bold bg-zinc-200 border-2 border-black px-2.5 py-1 rounded-lg">
+                // MÉTODO ANTIGUO: REGLA FIJA
+              </span>
+<span class="material-symbols-outlined text-zinc-600">receipt_long</span>
+</div>
+<h3 class="text-xl font-black text-black mb-2">La Receta Estricta</h3>
+<p class="text-xs sm:text-sm text-zinc-600 mb-4">
+              Un humano debe programar cada caso a mano con sentencias <code class="bg-zinc-200 px-1 py-0.5 rounded font-mono font-bold">SI ... ENTONCES</code>.
+            </p>
+<!-- Code block in dark with neo-brutalist border -->
+<div class="bg-black text-zinc-100 rounded-2xl border-2 border-black p-4 font-mono text-xs space-y-1.5 shadow-brutal-sm">
+<div class="text-teal-400 font-bold">// Regla para Pizza:</div>
+<div>SI tiene_queso == VERDADERO &amp;&amp;</div>
+<div class="pl-2">forma == "redonda" &amp;&amp;</div>
+<div class="pl-2">salsa == "roja" -&gt; ES PIZZA</div>
+<div class="pt-2 text-rose-400">// ¿Qué ocurre si la pizza es cuadrada?</div>
+<div class="bg-rose-950/80 border border-rose-500 p-2 rounded-lg text-rose-200 text-[11px] mt-1">
+                ❌ ERROR: La computadora no sabe qué hacer y colapsa.
+              </div>
+</div>
+</div>
+<div class="mt-4 p-3 bg-white border-2 border-black rounded-xl flex items-center gap-2.5 text-xs text-zinc-600 font-semibold shadow-brutal-sm">
+<span class="material-symbols-outlined text-rose-500 text-lg flex-shrink-0">cancel</span>
+<span>Sin una regla escrita de antemano, el programa queda ciego.</span>
+</div>
+</div>
+<!-- Right: Machine Learning Sandbox (New way) -->
+<div class="lg:col-span-7 card-brutal p-6 flex flex-col justify-between border-[3px] border-black bg-white">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+<span class="font-mono text-xs font-bold bg-brand-purple text-white border-2 border-black px-3 py-1 rounded-lg shadow-brutal-sm">
+                // ENFOQUE MACHINE LEARNING
+              </span>
+<span class="font-hand font-bold text-base text-brand-orange sticker-wiggle">
+                ¡Haz click en las etapas! ✍️
+              </span>
+</div>
+<h3 class="text-xl sm:text-2xl font-black text-black mb-1">Aprendizaje por Patrones</h3>
+<p class="text-xs sm:text-sm text-zinc-600 mb-5">
+              No le damos reglas fijas. Le mostramos miles de fotos etiquetadas y la red neuronal descubre por sí misma las características clave.
+            </p>
+<!-- Simulator interactive frame -->
+<div class="bg-brand-purpleSoft/30 border-2 border-black rounded-2xl p-4 space-y-4">
+<!-- Tab buttons -->
+<div class="grid grid-cols-3 gap-2">
+<button class="btn-brutal bg-brand-purple text-white font-mono text-xs font-bold py-2 rounded-xl text-center" id="sim-btn-1" onclick="runSimStep(1)">
+                  1. Entrada
+                </button>
+<button class="btn-brutal bg-white hover:bg-zinc-50 text-black font-mono text-xs font-bold py-2 rounded-xl text-center" id="sim-btn-2" onclick="runSimStep(2)">
+                  2. Entrenamiento
+                </button>
+<button class="btn-brutal bg-white hover:bg-zinc-50 text-black font-mono text-xs font-bold py-2 rounded-xl text-center" id="sim-btn-3" onclick="runSimStep(3)">
+                  3. Predicción
+                </button>
+</div>
+<!-- Interactive Display Stage -->
+<div class="bg-white border-2 border-black rounded-2xl p-5 min-h-[140px] flex flex-col items-center justify-center text-center shadow-brutal-sm" id="sim-stage-content">
+<div class="flex flex-wrap justify-center gap-2 mb-2">
+<span class="bg-amber-100 border-2 border-black px-2.5 py-0.5 rounded-full text-xs font-bold">🍕 Pizza Redonda</span>
+<span class="bg-amber-100 border-2 border-black px-2.5 py-0.5 rounded-full text-xs font-bold">🍕 Pizza Cuadrada</span>
+<span class="bg-amber-100 border-2 border-black px-2.5 py-0.5 rounded-full text-xs font-bold">🍕 Calzone</span>
+</div>
+<p class="text-xs sm:text-sm text-zinc-800 font-bold max-w-md">
+                  Paso 1: Le enseñamos 1.000 fotos con etiquetas correctas.
+                </p>
+<span class="text-xs font-mono text-brand-purple font-semibold mt-1">Presiona "2. Entrenamiento" para ver las neuronas ➔</span>
+</div>
+<!-- Confidence bar with brutalist styling -->
+<div class="bg-white border-2 border-black rounded-xl p-3 flex items-center justify-between shadow-brutal-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-brand-purple text-xl">psychology</span>
+<span class="text-xs font-bold text-black uppercase font-mono">Confianza de la Red:</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-28 sm:w-40 bg-zinc-100 h-3.5 rounded-full border-2 border-black overflow-hidden">
+<div class="bg-brand-teal h-full w-[35%] transition-all duration-500 border-r-2 border-black" id="sim-confidence-bar"></div>
+</div>
+<span class="font-mono text-xs font-black text-brand-teal w-10 text-right" id="sim-confidence-val">35%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: TALLER DE PROMPTS INTERACTIVO (Hungry Coders Inspired) -->
+<section class="space-y-6 pt-4" id="taller">
+<div class="text-center space-y-2">
+<span class="font-mono text-xs font-bold text-brand-orange uppercase tracking-wider">// 03 - pon a prueba tu prompt</span>
+<h2 class="text-3xl sm:text-4xl font-black text-black tracking-tight">
+          El Probador de Prompts: <span class="highlighter-yellow">Fórmula Mágica</span>
+</h2>
+<p class="text-sm sm:text-base text-zinc-600 max-w-xl mx-auto">
+          La IA no lee tu mente. Compara cómo cambia una instrucción floja contra una con Rol + Contexto + Tarea + Formato.
+        </p>
+</div>
+<!-- Side-by-side prompt cards comparison -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Prompt Flojo -->
+<div class="card-brutal p-6 flex flex-col justify-between bg-zinc-50 border-2 border-black">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="bg-rose-100 text-rose-800 border-2 border-black px-3 py-0.5 rounded-full font-mono text-xs font-bold shadow-brutal-sm">
+                ❌ PROMPT FLOJO (2/10)
+              </span>
+<span class="font-mono text-xs text-zinc-500">// genérico</span>
+</div>
+<div class="bg-white border-2 border-black rounded-xl p-3 font-mono text-xs text-zinc-800 mb-4 shadow-brutal-sm">
+              "hazme un resumen de historia"
+            </div>
+<div class="p-3 bg-zinc-100 border border-zinc-300 rounded-xl space-y-1">
+<div class="text-[11px] font-bold text-zinc-500 uppercase font-mono">Respuesta de la IA:</div>
+<p class="text-xs text-zinc-600 italic leading-relaxed">
+                "La historia es el estudio del pasado de la humanidad desde la aparición de la escritura. Hubo varias edades..."
+              </p>
+</div>
+</div>
+<div class="mt-4 text-xs font-bold text-rose-700 bg-rose-50 border-2 border-rose-300 p-2.5 rounded-xl">
+            ⚠️ ¿Por qué falló? No especificaste época, edad del lector ni el formato deseado.
+          </div>
+</div>
+<!-- Prompt Pro -->
+<div class="card-brutal p-6 flex flex-col justify-between bg-white border-[3px] border-black">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="bg-emerald-100 text-emerald-800 border-2 border-black px-3 py-0.5 rounded-full font-mono text-xs font-bold shadow-brutal-sm">
+                ✨ PROMPT PRO (10/10)
+              </span>
+<span class="font-hand font-bold text-base text-brand-purple">// ¡Excelente!</span>
+</div>
+<div class="bg-brand-purpleSoft border-2 border-black rounded-xl p-3 font-mono text-xs text-zinc-900 mb-4 shadow-brutal-sm">
+              "<span class="text-brand-purple font-black">[Rol: Guía espacial 3000]</span> explícame la Rev. Industrial a un <span class="text-brand-orange font-black">[Contexto: 7mo básico]</span> en <span class="text-emerald-700 font-black">[Formato: 3 emojis y lista]</span>"
+            </div>
+<div class="p-3 bg-zinc-50 border border-black rounded-xl space-y-1">
+<div class="text-[11px] font-bold text-brand-purple uppercase font-mono">Respuesta genial:</div>
+<p class="text-xs text-zinc-800 leading-relaxed font-medium">
+                "🚀 ¡Saludos terrícola! En 1760 cambiaron los caballos por máquinas de vapor súper ruidosas ⚙️. Se crearon fábricas enormes 🏭 y los trenes acortaron distancias para siempre."
+              </p>
+</div>
+</div>
+<div class="mt-4 text-xs font-bold text-emerald-800 bg-emerald-50 border-2 border-emerald-400 p-2.5 rounded-xl">
+            🎉 ¡Resultado estelar! Usaste la fórmula Rol + Tarea + Formato adecuada.
+          </div>
+</div>
+</div>
+<!-- Interactive Prompt Builder Sandbox (Neo-Brutalist form) -->
+<div class="card-brutal p-6 sm:p-8 bg-white border-[2.5px] border-black space-y-5">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-xl bg-brand-yellow border-2 border-black flex items-center justify-center font-bold text-sm shadow-brutal-sm">
+              🛠️
+            </span>
+<h3 class="text-xl font-black text-black">Constructor Interactivo de Prompts</h3>
+</div>
+<span class="font-mono text-xs text-zinc-500 font-bold">// arma tu fórmula al instante</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Role -->
+<div class="space-y-1.5">
+<label class="font-mono text-xs font-black text-zinc-700 block">1. ROL (¿Quién es?)</label>
+<select class="w-full bg-zinc-50 border-2 border-black rounded-xl p-2.5 text-xs font-bold text-black focus:ring-0 focus:outline-none shadow-brutal-sm" id="p-role" onchange="updatePromptPreview()">
+<option value="Científico loco">🧪 Científico loco</option>
+<option value="Detective escolar">🕵️ Detective escolar</option>
+<option value="Youtuber gamer">🎮 Youtuber gamer</option>
+<option value="Capitán pirata">🏴‍☠️ Capitán pirata</option>
+</select>
+</div>
+<!-- Task -->
+<div class="space-y-1.5">
+<label class="font-mono text-xs font-black text-zinc-700 block">2. TAREA (¿Qué hace?)</label>
+<select class="w-full bg-zinc-50 border-2 border-black rounded-xl p-2.5 text-xs font-bold text-black focus:ring-0 focus:outline-none shadow-brutal-sm" id="p-task" onchange="updatePromptPreview()">
+<option value="explícame qué es un átomo">⚛️ Explicar qué es un átomo</option>
+<option value="resuelve un dilema matemático">📐 Resolver acertijo matemático</option>
+<option value="cuenta el origen de los volcanes">🌋 Historia de volcanes</option>
+<option value="diseña una receta espacial">🥗 Receta espacial sana</option>
+</select>
+</div>
+<!-- Context -->
+<div class="space-y-1.5">
+<label class="font-mono text-xs font-black text-zinc-700 block">3. CONTEXTO (¿Para quién?)</label>
+<select class="w-full bg-zinc-50 border-2 border-black rounded-xl p-2.5 text-xs font-bold text-black focus:ring-0 focus:outline-none shadow-brutal-sm" id="p-context" onchange="updatePromptPreview()">
+<option value="para mi exposición de ciencias de 7mo">Exposición de Ciencias 7°</option>
+<option value="para estudiar antes de una prueba rápida">Estudiar para prueba rápida</option>
+<option value="para un debate divertido en equipo">Debate en equipo</option>
+</select>
+</div>
+<!-- Format -->
+<div class="space-y-1.5">
+<label class="font-mono text-xs font-black text-zinc-700 block">4. FORMATO (¿Cómo sale?)</label>
+<select class="w-full bg-zinc-50 border-2 border-black rounded-xl p-2.5 text-xs font-bold text-black focus:ring-0 focus:outline-none shadow-brutal-sm" id="p-format" onchange="updatePromptPreview()">
+<option value="en 3 puntos breves con emojis">3 puntos con emojis</option>
+<option value="en una rima cómica de 4 versos">Rima cómica de 4 versos</option>
+<option value="como una adivinanza con pistas">Adivinanza con pistas</option>
+</select>
+</div>
+</div>
+<!-- Generated preview bar -->
+<div class="p-4 bg-zinc-50 border-2 border-black rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-brutal-sm">
+<div class="w-full">
+<span class="font-mono text-[11px] font-black uppercase text-brand-purple tracking-wider block mb-1">
+              // prompt generado listo para copiar:
+            </span>
+<p class="font-mono text-xs sm:text-sm font-bold text-black" id="prompt-preview-text">
+              "Actúa como un Científico loco, explícame qué es un átomo para mi exposición de ciencias de 7mo en 3 puntos breves con emojis."
+            </p>
+</div>
+<button class="btn-brutal bg-brand-purple text-white font-extrabold text-xs px-5 py-2.5 rounded-xl flex items-center gap-1.5 flex-shrink-0" id="copy-btn" onclick="copyGeneratedPrompt()">
+<span class="material-symbols-outlined text-base">content_copy</span>
+<span>Copiar Prompt</span>
+</button>
+</div>
+</div>
+</section>
+<!-- SECTION 4: MEDALLAS Y TROFEOS (Vitrina estilo pegatinas cómic) -->
+<section class="space-y-6 pt-4" id="trofeos">
+<div class="text-center space-y-2">
+<span class="font-mono text-xs font-bold text-brand-yellow uppercase tracking-wider">// 04 - vitrina escolar</span>
+<h2 class="text-3xl sm:text-4xl font-black text-black tracking-tight">
+          Medallas &amp; <span class="highlighter-purple">Conquistas</span> Recientes
+        </h2>
+<p class="text-sm sm:text-base text-zinc-600 max-w-xl mx-auto">
+          Has completado 3 de 12 desafíos. ¡Mira tus stickers de honor ganados en clase!
+        </p>
+</div>
+<!-- 4 Trophy Badges -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Trophy 1 -->
+<div class="card-brutal p-6 flex flex-col items-center text-center gap-3 bg-white">
+<div class="w-20 h-20 rounded-3xl bg-amber-200 border-[2.5px] border-black flex items-center justify-center shadow-brutal transform -rotate-3 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined text-4xl text-black">pattern</span>
+</div>
+<h4 class="text-lg font-black text-black">Cazador de Patrones</h4>
+<p class="text-xs text-zinc-600">
+            Identificaste 50 coincidencias visuales en el analizador de píxeles sin fallos.
+          </p>
+<span class="font-mono text-[11px] font-bold bg-amber-100 border border-black text-amber-950 px-2.5 py-0.5 rounded-full mt-1">
+            +50 XP • Ganada ayer
+          </span>
+</div>
+<!-- Trophy 2 -->
+<div class="card-brutal p-6 flex flex-col items-center text-center gap-3 bg-white">
+<div class="w-20 h-20 rounded-3xl bg-purple-200 border-[2.5px] border-black flex items-center justify-center shadow-brutal transform rotate-3 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined text-4xl text-black">magic_button</span>
+</div>
+<h4 class="text-lg font-black text-black">Domador de Prompts</h4>
+<p class="text-xs text-zinc-600">
+            Escribiste 5 instrucciones con rol, contexto y formato con nota sobresaliente.
+          </p>
+<span class="font-mono text-[11px] font-bold bg-purple-100 border border-black text-purple-950 px-2.5 py-0.5 rounded-full mt-1">
+            +75 XP • Hace 3 días
+          </span>
+</div>
+<!-- Trophy 3 -->
+<div class="card-brutal p-6 flex flex-col items-center text-center gap-3 bg-white">
+<div class="w-20 h-20 rounded-3xl bg-teal-200 border-[2.5px] border-black flex items-center justify-center shadow-brutal transform -rotate-2 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined text-4xl text-black">policy</span>
+</div>
+<h4 class="text-lg font-black text-black">Detective Anti-FakeNews</h4>
+<p class="text-xs text-zinc-600">
+            Descubriste 3 imágenes generadas con sesgos y protegiste tu privacidad en internet.
+          </p>
+<span class="font-mono text-[11px] font-bold bg-teal-100 border border-black text-teal-950 px-2.5 py-0.5 rounded-full mt-1">
+            +100 XP • Esta semana
+          </span>
+</div>
+<!-- Trophy 4 (Locked) -->
+<div class="card-brutal p-6 flex flex-col items-center text-center gap-3 bg-zinc-100/70 border-zinc-400 opacity-75">
+<div class="w-20 h-20 rounded-3xl bg-zinc-200 border-[2.5px] border-zinc-600 flex items-center justify-center shadow-brutal-sm">
+<span class="material-symbols-outlined text-4xl text-zinc-500">lock</span>
+</div>
+<h4 class="text-lg font-black text-zinc-700">Arquitecto Neuronal</h4>
+<p class="text-xs text-zinc-500">
+            Conecta 3 capas de neuronas artificiales con más de 95% de precisión.
+          </p>
+<span class="font-mono text-[11px] font-bold bg-zinc-200 border border-zinc-500 text-zinc-600 px-2.5 py-0.5 rounded-full mt-1">
+            🔒 Bloqueado (Misión 4)
+          </span>
+</div>
+</div>
+</section>
+<!-- BOTTOM CTA BANNER (Hungry Coders black pill bottom bar) -->
+<section class="py-6 flex flex-col items-center text-center space-y-4">
+<div class="flex flex-col sm:flex-row items-center gap-3">
+<a class="btn-brutal bg-black text-white font-extrabold text-sm px-8 py-3.5 rounded-full flex items-center gap-2 shadow-brutal-lg" href="#misiones">
+<span>Abrir Todas las Misiones</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<div class="flex items-center gap-2 font-hand font-bold text-lg text-zinc-600">
+<span>✨ Acceso escolar 100% gratuito • Diseñado para 7° Básico • Seguro para niños</span>
+</div>
+</section>
+</main>
+<!-- FOOTER (Neo-brutalist clean footer) -->
+<footer class="w-full bg-white border-t-[2.5px] border-black py-8 mt-12">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-xl bg-brand-cyan border-2 border-black flex items-center justify-center font-bold shadow-brutal-sm">
+<span class="material-symbols-outlined text-base">smart_toy</span>
+</div>
+<span class="font-black text-lg text-black">ExploraIA</span>
+<span class="font-mono text-xs bg-zinc-100 border border-black px-2 py-0.5 rounded-full font-bold">Aula Digital 7°</span>
+</div>
+<div class="text-xs text-zinc-500 font-mono text-center md:text-right">
+        © 2025 ExploraIA. Plataforma abierta de ciencias de la computación e Inteligencia Artificial.
+      </div>
+</div>
+</footer>
+<!-- INTERACTIVE JAVASCRIPT -->
+<script>
+    // Simulator Tab Handler
+    function runSimStep(step) {
+      const stage = document.getElementById('sim-stage-content');
+      const bar = document.getElementById('sim-confidence-bar');
+      const val = document.getElementById('sim-confidence-val');
+
+      // Update button active styling
+      ['sim-btn-1', 'sim-btn-2', 'sim-btn-3'].forEach((id, idx) => {
+        const btn = document.getElementById(id);
+        if (idx + 1 === step) {
+          btn.className = "btn-brutal bg-brand-purple text-white font-mono text-xs font-bold py-2 rounded-xl text-center";
+        } else {
+          btn.className = "btn-brutal bg-white hover:bg-zinc-50 text-black font-mono text-xs font-bold py-2 rounded-xl text-center";
+        }
+      });
+
+      if (step === 1) {
+        stage.innerHTML = `
+          <div class="flex flex-wrap justify-center gap-2 mb-2">
+            <span class="bg-amber-100 border-2 border-black px-2.5 py-0.5 rounded-full text-xs font-bold">🍕 Pizza Redonda</span>
+            <span class="bg-amber-100 border-2 border-black px-2.5 py-0.5 rounded-full text-xs font-bold">🍕 Pizza Cuadrada</span>
+            <span class="bg-amber-100 border-2 border-black px-2.5 py-0.5 rounded-full text-xs font-bold">🍕 Calzone</span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-800 font-bold max-w-md">
+            Paso 1: Le enseñamos 1.000 fotos con etiquetas correctas.
+          </p>
+          <span class="text-xs font-mono text-brand-purple font-semibold mt-1">Presiona "2. Entrenamiento" para ver las neuronas ➔</span>
+        `;
+        bar.style.width = '35%';
+        bar.className = 'bg-brand-teal h-full transition-all duration-500 border-r-2 border-black';
+        val.innerText = '35%';
+        val.className = 'font-mono text-xs font-black text-brand-teal w-10 text-right';
+      } else if (step === 2) {
+        stage.innerHTML = `
+          <div class="flex items-center gap-2 mb-2">
+            <span class="px-2.5 py-1 bg-purple-100 border-2 border-black rounded-lg text-xs font-mono font-bold">Capa 1: Bordes</span>
+            <span class="font-black text-black">➔</span>
+            <span class="px-2.5 py-1 bg-amber-100 border-2 border-black rounded-lg text-xs font-mono font-bold">Capa 2: Salsa</span>
+            <span class="font-black text-black">➔</span>
+            <span class="px-2.5 py-1 bg-teal-100 border-2 border-black rounded-lg text-xs font-mono font-bold">Capa 3: Textura</span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-800 font-bold max-w-md">
+            Paso 2 (Entrenamiento): Las neuronas artificiales calculan pesos matemáticos para cada rasgo visual.
+          </p>
+          <span class="text-xs font-mono text-brand-orange font-semibold mt-1">¡Casi listo! Pasa a la predicción final ➔</span>
+        `;
+        bar.style.width = '75%';
+        bar.className = 'bg-brand-orange h-full transition-all duration-500 border-r-2 border-black';
+        val.innerText = '75%';
+        val.className = 'font-mono text-xs font-black text-brand-orange w-10 text-right';
+      } else if (step === 3) {
+        stage.innerHTML = `
+          <div class="inline-flex items-center gap-2 bg-emerald-200 border-2 border-black px-4 py-1 rounded-full text-xs font-black mb-2 shadow-brutal-sm">
+            <span class="material-symbols-outlined text-base text-emerald-950">check_circle</span>
+            <span>¡Predicción: Es 99% Seguro Pizza Cuadrada!</span>
+          </div>
+          <p class="text-xs sm:text-sm text-zinc-800 font-bold max-w-md">
+            Paso 3: Le pasamos una pizza cuadrada nunca antes vista... ¡y la reconoce sin reglas fijas!
+          </p>
+          <span class="text-xs font-hand font-bold text-base text-brand-purple mt-1">¡Felicitaciones, Cadete! Has entendido Machine Learning 🎉</span>
+        `;
+        bar.style.width = '99%';
+        bar.className = 'bg-emerald-400 h-full transition-all duration-500 border-r-2 border-black';
+        val.innerText = '99%';
+        val.className = 'font-mono text-xs font-black text-emerald-600 w-10 text-right';
+      }
+    }
+
+    // Prompt Live Builder
+    function updatePromptPreview() {
+      const role = document.getElementById('p-role').value;
+      const task = document.getElementById('p-task').value;
+      const ctx = document.getElementById('p-context').value;
+      const fmt = document.getElementById('p-format').value;
+
+      document.getElementById('prompt-preview-text').innerText = 
+        `"Actúa como un ${role}, ${task} ${ctx} ${fmt}."`;
+    }
+
+    // Copy to clipboard
+    function copyGeneratedPrompt() {
+      const text = document.getElementById('prompt-preview-text').innerText;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('copy-btn');
+      const originalContent = btn.innerHTML;
+      
+      btn.innerHTML = `<span class="material-symbols-outlined text-base">done</span><span>¡Copiado!</span>`;
+      btn.classList.add('bg-emerald-600');
+      
+      setTimeout(() => {
+        btn.innerHTML = originalContent;
+        btn.classList.remove('bg-emerald-600');
+      }, 1800);
+    }
+  </script>
+</body></html>
