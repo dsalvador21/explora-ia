@@ -2,6 +2,7 @@ import { Icon } from './components/Icon'
 import { visibleLessons } from './data/lessons'
 import { HomePage } from './pages/HomePage'
 import { ClassesPage } from './pages/ClassesPage'
+import { GroupsPage } from './pages/GroupsPage'
 import { LessonPage } from './pages/LessonPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 
@@ -14,8 +15,9 @@ function Navbar({ pathname }: { pathname: string }) {
     <header className="site-header">
       <div className="page-width flex items-center justify-between gap-4">
         <a href="/" aria-label="ExploraIA, inicio"><Brand /></a>
-        <nav aria-label="Navegación principal" className="flex items-center gap-2 sm:gap-3">
+        <nav aria-label="Navegación principal" className="primary-nav">
           <a className="nav-link" href="/" aria-current={pathname === '/' ? 'page' : undefined}>Inicio</a>
+          <a className="nav-link" href="/grupos" aria-current={pathname === '/grupos' ? 'page' : undefined}>Grupos</a>
           <a className="nav-link nav-classes" href="/clases" aria-current={pathname === '/clases' ? 'page' : undefined}>Clases <Icon name="arrow" /></a>
         </nav>
       </div>
@@ -30,6 +32,7 @@ export function App({ pathname = window.location.pathname }: { pathname?: string
   const lesson = visibleLessons.find(item => path === `/clases/${item.slug}`)
   const page = path === '/' ? <HomePage />
     : path === '/clases' ? <ClassesPage />
+      : path === '/grupos' ? <GroupsPage />
       : lesson ? <LessonPage lesson={lesson} /> : <NotFoundPage />
 
   return (

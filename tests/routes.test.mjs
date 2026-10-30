@@ -143,3 +143,30 @@ test('los nuevos pasos de clase 3 y los ocho ajustes conservan sus textos y boto
   assert.equal((html.match(/>Copiar<\/button>/g) || []).length, 10)
   assert.ok(!render('/clases/planificacion-y-requerimientos').includes('Revisar requerimientos'))
 })
+
+test('Grupos muestra seis equipos, 19 nombres abreviados y sus correos copiables', async () => {
+  const { groups } = await server.ssrLoadModule('/src/data/groups.ts')
+  const html = render('/grupos')
+  assert.equal(groups.length, 6)
+  assert.equal(groups.flatMap(group => group.members).length, 19)
+  assert.equal((html.match(/<article /g) || []).length, 6)
+  assert.equal((html.match(/>Copiar correo<\/button>/g) || []).length, 6)
+  assert.equal((html.match(/role="status"/g) || []).length, 6)
+  assert.match(html, /href="\/grupos" aria-current="page"/)
+  assert.equal(render('/grupos/'), html)
+  for (const [index, group] of groups.entries()) {
+    assert.equal(group.number, index + 1)
+    assert.equal(group.email, `talleriaescuelapjmb.grupo${index + 1}@gmail.com`)
+    assert.ok(html.includes(`Grupo ${group.number}`))
+    assert.ok(html.includes(group.email))
+    assert.ok(html.includes(`Copiar correo del grupo ${group.number}`))
+    assert.equal(group.members.length, group.number === 6 ? 4 : 3)
+    for (const member of group.members) {
+      assert.match(member, /^\p{L}+ \p{L}\.$/u, 'Solo primer nombre e inicial de apellido')
+      assert.ok(html.includes(member))
+    }
+  }
+  for (const route of ['/', '/clases', '/clases/planificacion-y-requerimientos', '/clases/diseno-de-sitios-web-con-ia']) {
+    assert.ok(render(route).includes('href="/grupos"'))
+  }
+})
