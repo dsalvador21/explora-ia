@@ -11,7 +11,7 @@ const membersByGroup = [
   ['Christian F.', 'Félix L.', 'Fabiola M.'],
   ['Victoria D.', 'Joseph D.', 'Javier S.'],
   ['Khristyan S.', 'Isaias R.', 'Tiffany M.'],
-  ['Félix B.', 'Lusbrianny C.', 'Enaim Q.', 'Hector M.'],
+  ['Félix B.', 'Lusbrianny C.', 'Enaim Q.', 'Hector M.', 'Antonia A.'],
 ]
 
 export const groups: Group[] = membersByGroup.map((members, index) => ({
