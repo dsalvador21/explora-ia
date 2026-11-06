@@ -283,3 +283,58 @@ h2 { font-size: clamp(25px, 2.7vw, 34px); font-weight: 800; letter-spacing: -1.2
   .site-header > .page-width { height: auto; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
   .site-header nav { width: 100%; justify-content: center; }
 }
+
+/* Clase 4: implementación y simulaciones educativas locales. */
+.implementation-lesson .implementation-route { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+.implementation-lesson .implementation-route a { display: flex; align-items: center; gap: 8px; border: 1.5px solid #18181b; border-radius: 9px; padding: 8px 12px; font-size: 12px; font-weight: 700; background: #fff; }
+.implementation-lesson .implementation-route a:hover { background: #ede9fe; }
+.implementation-lesson .implementation-route a span { color: #6d28d9; font: 700 10px var(--font-mono); }
+.implementation-lesson .implementation-info-grid { margin-block: 22px; }
+.implementation-lesson .implementation-info-grid > div { min-width: 0; background: #fafaf8; border: 1.5px solid #18181b; border-radius: 14px; padding: 20px; }
+.implementation-lesson h4 { font-size: 15px; font-weight: 800; }
+.implementation-lesson .implementation-info-grid h3 { font-size: 16px; margin-bottom: 12px; }
+.implementation-lesson .implementation-list { list-style: disc; padding-left: 20px; margin-block: 14px; font-size: 14px; line-height: 1.9; color: #57575f; }
+.implementation-lesson .implementation-list li + li { margin-top: 6px; }
+.implementation-lesson .implementation-note { margin-block: 22px; padding: 16px 20px; border: 2px solid #18181b; border-radius: 13px; background: #fef3c7; color: #18181b; }
+.implementation-lesson .implementation-note h3 { font-size: 16px; }
+.implementation-lesson .implementation-instructions { margin-top: 10px; }
+.implementation-lesson .implementation-main-panel { border-top-width: 7px; border-top-color: #8b5cf6; }
+.implementation-lesson .implementation-placeholder { color: #581c87; background: #fde68a; border-radius: 4px; font-weight: 700; }
+.implementation-lesson .implementation-finish { margin-top: 24px; color: #6d28d9; font: 700 26px/1.4 'Caveat', cursive; }
+.implementation-lesson .implementation-disclosure { margin-top: 16px; border: 1.5px solid #18181b; border-radius: 12px; background: #fafaf8; }
+.implementation-lesson .implementation-disclosure summary { cursor: pointer; padding: 16px; font-size: 14px; font-weight: 800; }
+.implementation-lesson .implementation-disclosure summary:hover { background: #ede9fe; border-radius: 12px; }
+.implementation-lesson .implementation-disclosure > div { padding: 0 18px 18px; }
+.implementation-lesson .implementation-disclosure .prompt-card { margin-top: 16px; }
+.implementation-lesson .implementation-demo { margin-top: 24px; border: 2px solid #18181b; border-radius: 16px; padding: 22px; background: #f5f3ff; }
+.implementation-lesson .implementation-toggles { display: flex; flex-wrap: wrap; gap: 12px; margin-block: 20px; }
+.implementation-lesson .implementation-toggles label { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; background: #fff; padding: 12px; border: 1.5px solid #18181b; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer; }
+.implementation-lesson input[type='checkbox'] { width: 19px; height: 19px; flex-shrink: 0; accent-color: #7c3aed; cursor: pointer; }
+.implementation-lesson .implementation-toggles label span { font-size: 11px; font-weight: 500; }
+.implementation-lesson .web-demo-stage { display: grid; justify-items: center; align-content: center; min-height: 160px; padding: 24px; border: 2px dashed #c4b5fd; border-radius: 12px; background: #fff; text-align: center; gap: 16px; }
+.implementation-lesson .web-demo-stage p { font-size: 12px; }
+.implementation-lesson .demo-styled { color: #18181b; background: #ddd6fe; border: 2px solid #18181b; border-radius: 14px; padding: 14px 24px; box-shadow: 4px 4px #18181b; font-size: 17px; font-weight: 800; cursor: pointer; }
+.implementation-lesson .demo-plain { color: ButtonText; background: ButtonFace; border: 2px outset ButtonBorder; border-radius: 0; padding: 2px 6px; font: 13px Arial, sans-serif; cursor: pointer; }
+.implementation-lesson .implementation-code { padding: 16px; max-width: 100%; overflow-x: auto; font: 12px/1.8 var(--font-mono); }
+.implementation-lesson .implementation-assistants { margin-block: 24px; }
+.implementation-lesson .implementation-assistant { display: flex; flex-direction: column; gap: 18px; padding: 22px; border: 2px solid #18181b; border-radius: 16px; box-shadow: 3px 3px #18181b; background: #fff; }
+.implementation-lesson .implementation-assistant .lesson-link { margin-top: auto; align-self: flex-start; }
+.implementation-lesson .implementation-small { font-size: 12px; line-height: 1.8; margin-block: 15px; }
+.implementation-lesson .step-tabs button { min-width: 0; padding: 13px 10px; font-size: 12px; overflow-wrap: anywhere; }
+.implementation-lesson .design-tool-button { padding: 10px 14px; gap: 9px; font-size: 13px; color: #18181b; background: #fff; }
+.implementation-lesson .tool-icon, .implementation-lesson .tool-icon svg { display: block; width: 22px; height: 22px; }
+.implementation-lesson :is(summary, input, textarea):focus-visible { outline: 3px solid #7c3aed; outline-offset: 5px; }
+@media (max-width: 767px) {
+  .implementation-lesson .implementation-demo { padding: 16px; }
+  .implementation-lesson .implementation-toggles { flex-direction: column; }
+  .implementation-lesson .step-tabs button { flex-direction: column; }
+  .implementation-lesson .implementation-assistant { padding: 18px; }
+}
+
+/* Clase 4: herramientas reconocibles y repaso opcional. */
+.implementation-lesson .assistant-logo { display: grid; place-items: center; width: 50px; height: 50px; flex-shrink: 0; background: #fff; border: 1.5px solid #18181b; border-radius: 13px; }
+.implementation-lesson .assistant-logo img { width: 36px; height: 36px; object-fit: contain; }
+.implementation-lesson .implementation-info-grid > div > .lesson-link { margin-top: 15px; }
+
+.implementation-lesson .implementation-help-prompts { margin-top: 22px; }
+.implementation-lesson #implementation-save .design-tool-button { margin-top: 20px; }

@@ -15,7 +15,7 @@ export type Lesson = {
   materials: string[]
 }
 
-// Contenido breve de ejemplo, listo para reemplazar por el material de cada clase.
+// Datos compartidos del listado y de los encabezados de las clases.
 export const lessons: Lesson[] = [
   {
     number: '01',
@@ -68,6 +68,19 @@ export const lessons: Lesson[] = [
       'Compara el ejemplo con tu boceto y anota dos mejoras para tu diseño.',
     ],
     materials: ['Plan y boceto de la clase 2', 'Computador o tablet con acceso a internet'],
+  },
+  {
+    number: '04',
+    slug: 'implementacion-i',
+    title: 'Implementación I',
+    description: 'Convierte tus requerimientos y diseños en tu primera página web con HTML, CSS, JavaScript y ayuda de la IA.',
+    icon: 'code',
+    theme: 'yellow',
+    tags: ['Construir', 'Probar'],
+    sticker: '¡Manos al código!',
+    objective: 'Construir, probar y guardar una primera versión del sitio web con ayuda de la IA.',
+    activities: [],
+    materials: ['Requerimientos y prototipo del sitio', 'Visual Studio Code', 'Navegador web'],
   },
 ]
 

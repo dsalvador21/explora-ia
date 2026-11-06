@@ -2,11 +2,14 @@ import type { Lesson } from '../data/lessons'
 import { LessonHeader } from '../components/LessonHeader'
 import { PlanningLessonPage } from './PlanningLessonPage'
 import { DesignLessonPage } from './DesignLessonPage'
+import { ImplementationLessonPage } from './ImplementationLessonPage'
 
 export function LessonPage({ lesson }: { lesson: Lesson }) {
   if (lesson.slug === 'planificacion-y-requerimientos') return <PlanningLessonPage lesson={lesson} />
 
   if (lesson.slug === 'diseno-de-sitios-web-con-ia') return <DesignLessonPage lesson={lesson} />
+
+  if (lesson.slug === 'implementacion-i') return <ImplementationLessonPage lesson={lesson} />
 
   return (
     <article className={`lesson-page theme-${lesson.theme}`} aria-labelledby="lesson-title">

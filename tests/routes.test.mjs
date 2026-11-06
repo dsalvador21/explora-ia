@@ -27,7 +27,7 @@ test('inicio y listado muestran solo las clases visibles con su numeración orig
   assert.match(home, /href="\/clases"[^>]*>Explorar clases/)
   assert.match(listing, /id="classes-title"/)
   assert.match(listing, /href="\/clases" aria-current="page"/)
-  assert.equal((listing.match(/<article /g) || []).length, 2)
+  assert.equal((listing.match(/<article /g) || []).length, 3)
   for (const lesson of lessons.filter(item => !item.hidden)) {
     for (const html of [home, listing]) {
       assert.ok(html.includes(`href="/clases/${lesson.slug}"`))
@@ -42,7 +42,7 @@ test('inicio y listado muestran solo las clases visibles con su numeración orig
 })
 
 test('las clases visibles muestran su título y un enlace de regreso', () => {
-  assert.equal(new Set(lessons.map(lesson => lesson.slug)).size, 3)
+  assert.equal(new Set(lessons.map(lesson => lesson.slug)).size, 4)
   for (const lesson of lessons.filter(item => !item.hidden)) {
     const html = render(`/clases/${lesson.slug}`)
     assert.ok(html.includes(`<h1 id="lesson-title">${lesson.title}</h1>`))
@@ -144,11 +144,11 @@ test('los nuevos pasos de clase 3 y los ocho ajustes conservan sus textos y boto
   assert.ok(!render('/clases/planificacion-y-requerimientos').includes('Revisar requerimientos'))
 })
 
-test('Grupos muestra seis equipos, 19 nombres abreviados y sus correos copiables', async () => {
+test('Grupos muestra seis equipos, 20 nombres abreviados y sus correos copiables', async () => {
   const { groups } = await server.ssrLoadModule('/src/data/groups.ts')
   const html = render('/grupos')
   assert.equal(groups.length, 6)
-  assert.equal(groups.flatMap(group => group.members).length, 19)
+  assert.equal(groups.flatMap(group => group.members).length, 20)
   assert.equal((html.match(/<article /g) || []).length, 6)
   assert.equal((html.match(/>Copiar correo<\/button>/g) || []).length, 6)
   assert.equal((html.match(/role="status"/g) || []).length, 6)
@@ -160,7 +160,7 @@ test('Grupos muestra seis equipos, 19 nombres abreviados y sus correos copiables
     assert.ok(html.includes(`Grupo ${group.number}`))
     assert.ok(html.includes(group.email))
     assert.ok(html.includes(`Copiar correo del grupo ${group.number}`))
-    assert.equal(group.members.length, group.number === 6 ? 4 : 3)
+    assert.equal(group.members.length, group.number === 6 ? 5 : 3)
     for (const member of group.members) {
       assert.match(member, /^\p{L}+ \p{L}\.$/u, 'Solo primer nombre e inicial de apellido')
       assert.ok(html.includes(member))
@@ -169,4 +169,81 @@ test('Grupos muestra seis equipos, 19 nombres abreviados y sus correos copiables
   for (const route of ['/', '/clases', '/clases/planificacion-y-requerimientos', '/clases/diseno-de-sitios-web-con-ia']) {
     assert.ok(render(route).includes('href="/grupos"'))
   }
+})
+
+
+test('clase 4 está integrada y tiene las seis secciones y sus accesos', () => {
+  const html = render('/clases/implementacion-i')
+  assert.equal((html.match(/<section /g) || []).length, 6)
+  for (const title of ['¿Te falta terminar el diseño?', '¿Cómo se construye una página web?', 'Conoce las herramientas de IA', '¡Implementemos nuestro sitio web!', 'Prompts de ayuda', '¡Guardemos nuestros avances!']) assert.ok(html.includes(title))
+  for (const url of ['https://claude.ai/', 'https://chatgpt.com/', 'https://gemini.google.com/', 'https://drive.google.com/']) assert.ok(html.includes(`href="${url}"`))
+  assert.ok(html.includes('3 requerimientos definidos'))
+  assert.ok(html.includes('una vista diseñada'))
+  assert.equal((html.match(/role="tab"/g) || []).length, 4)
+  assert.equal((html.match(/role="tabpanel"/g) || []).length, 1)
+  const ids = [...html.matchAll(/ id="([^"]+)"/g)].map(match => match[1])
+  assert.equal(new Set(ids).size, ids.length)
+  const hrefs = [...html.matchAll(/href="#([^"]+)"/g)].map(match => match[1])
+  for (const href of hrefs) assert.ok(ids.includes(href), `El ancla ${href} debe existir`)
+  for (const [path, anchor] of [['/clases/planificacion-y-requerimientos', 'copy-prompts-title'], ['/clases/diseno-de-sitios-web-con-ia', 'design-workshop-title']]) {
+    assert.ok(html.includes(`href="${path}#${anchor}"`))
+    assert.ok(render(path).includes(`id="${anchor}"`))
+  }
+})
+
+test('los cuatro pasos muestran el prompt completo y sus campos reemplazables', async () => {
+  const { ImplementationStepContent } = await server.ssrLoadModule('/src/components/implementation/ImplementationPrompts.tsx')
+  const { implementationSteps } = await server.ssrLoadModule('/src/data/implementation.ts')
+  assert.equal(implementationSteps.length, 4)
+  for (const step of implementationSteps) {
+    const html = renderToStaticMarkup(createElement(ImplementationStepContent, { step }))
+    const text = html.replace(/<[^>]*>/g, '')
+    assert.ok(text.includes(step.prompt))
+    assert.ok(text.includes(step.objective))
+    assert.ok(text.includes(step.instructions))
+    assert.ok(text.includes(step.hint))
+    assert.equal((html.match(/>Copiar<\/button>/g) || []).length, 1)
+    assert.match(html, /role="status"/)
+    for (const other of implementationSteps) if (other !== step) assert.ok(!text.includes(other.prompt))
+    for (const placeholder of step.prompt.match(/\[[^\]]+\]/g) || []) assert.ok(html.includes(`class="implementation-placeholder">${placeholder}</mark>`))
+  }
+})
+
+test('Clase 4 conserva cuatro pasos prácticos sin prohibir herramientas adicionales', async () => {
+  const { implementationSteps } = await server.ssrLoadModule('/src/data/implementation.ts')
+  assert.deepEqual(implementationSteps.map(step => step.label), ['Planificar', 'Generar código', 'Probar', 'Mejorar'])
+  const [plan, generate, tryPage] = implementationSteps
+  assert.ok(plan.prompt.includes('Cómo crear la carpeta del proyecto y abrirla en Visual Studio Code.'))
+  assert.ok(plan.prompt.includes('No generes el código del sitio todavía.'))
+  assert.ok(plan.prompt.includes('base de datos'))
+  assert.ok(generate.prompt.includes('dónde pegar cada bloque'))
+  assert.ok(generate.prompt.includes('qué archivos necesitamos y cómo prepararlos'))
+  assert.ok(!generate.prompt.includes('No utilices React'))
+  assert.ok(!generate.prompt.includes('Utiliza únicamente'))
+  assert.ok(!tryPage.prompt.includes('colores, imágenes y botones'))
+})
+
+test('ayudas breves copiables y guardado sin checklist ni repaso teórico', async () => {
+  const { HelpPrompts } = await server.ssrLoadModule('/src/components/implementation/ImplementationPrompts.tsx')
+  const { helpPrompts } = await server.ssrLoadModule('/src/data/implementation.ts')
+  const html = renderToStaticMarkup(createElement(HelpPrompts))
+  for (const item of helpPrompts) {
+    assert.ok(html.includes(item.title))
+    assert.ok(html.replace(/<[^>]*>/g, '').includes(item.prompt))
+  }
+  assert.equal((html.match(/>Copiar<\/button>/g) || []).length, helpPrompts.length)
+  assert.equal((html.match(/role="status"/g) || []).length, helpPrompts.length)
+  const page = render('/clases/implementacion-i')
+  for (const removed of ['Repasar jugando', 'token-message', 'quota-progress', 'save-checklist', 'Insertar código', '¿Tienes problemas con tu página?']) assert.ok(!page.includes(removed))
+  assert.ok(page.includes('carpeta completa del proyecto'))
+  assert.ok(page.includes('No guarden solamente index.html.'))
+  assert.ok(page.includes('href="https://drive.google.com/"'))
+})
+
+test('la demostración web sigue disponible', async () => {
+  const { WebLanguagesDemo } = await server.ssrLoadModule('/src/components/implementation/WebLanguagesDemo.tsx')
+  const demo = renderToStaticMarkup(createElement(WebLanguagesDemo))
+  assert.equal((demo.match(/type="checkbox"/g) || []).length, 3)
+  assert.match(demo, /class="demo-plain"/)
+  assert.ok(demo.includes('sin JavaScript no muestra un mensaje'))
 })
