@@ -82,6 +82,19 @@ export const lessons: Lesson[] = [
     activities: [],
     materials: ['Requerimientos y prototipo del sitio', 'Visual Studio Code', 'Navegador web'],
   },
+  {
+    number: '05',
+    slug: 'testing-y-cierre',
+    title: 'Testing y cierre',
+    description: 'Sigue construyendo, prueba tu página web y celebra todo lo que aprendiste. ¡Tu próxima creación comienza aquí!',
+    icon: 'spark',
+    theme: 'purple',
+    tags: ['Probar', 'Mejorar', 'Seguir creando'],
+    sticker: '¡Esto recién comienza!',
+    objective: 'Comprobar los requerimientos, encontrar errores y mejorar tu página web con ayuda de la IA para seguir creando después del taller.',
+    activities: [],
+    materials: ['Archivos actualizados del proyecto', 'Requerimientos del sitio', 'Visual Studio Code', 'Navegador web'],
+  },
 ]
 
 export const visibleLessons = lessons.filter(lesson => !lesson.hidden)

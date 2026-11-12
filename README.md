@@ -12,10 +12,14 @@ npm run dev
 ## Rutas
 
 - `/`: página de inicio.
-- `/clases`: listado de las tres clases.
+- `/clases`: listado de las clases visibles (2 a 5).
 - `/clases/introduccion-a-la-inteligencia-artificial`: clase 1.
 - `/clases/planificacion-y-requerimientos`: clase 2.
 - `/clases/diseno-de-sitios-web-con-ia`: clase 3.
+- `/clases/implementacion-i`: clase 4.
+- `/clases/testing-y-cierre`: clase 5.
+
+La clase 1 está oculta en el catálogo actual y su ruta muestra la página no encontrada.
 
 Los enlaces usan navegación nativa del navegador, sin una dependencia de enrutamiento. Las rutas desconocidas muestran una página de ayuda para volver al listado.
 
@@ -26,7 +30,7 @@ Los enlaces usan navegación nativa del navegador, sin una dependencia de enruta
 - `src/pages/`: inicio, listado, plantilla de clase y página no encontrada.
 - `src/App.tsx`: selección de página y estructura común de navegación y pie.
 
-El contenido de las clases es breve y de ejemplo. Cada clase comparte una plantilla con título, objetivo, actividades y materiales.
+Las clases 2 a 5 tienen páginas propias que reutilizan encabezados, tarjetas de prompts copiables y enlaces a herramientas. La Clase 5 incluye continuidad del proyecto, cambio de IA, testing, cierre del taller y recuperación de archivos en Drive.
 
 ## Verificación
 

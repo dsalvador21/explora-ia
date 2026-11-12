@@ -27,7 +27,7 @@ test('inicio y listado muestran solo las clases visibles con su numeración orig
   assert.match(home, /href="\/clases"[^>]*>Explorar clases/)
   assert.match(listing, /id="classes-title"/)
   assert.match(listing, /href="\/clases" aria-current="page"/)
-  assert.equal((listing.match(/<article /g) || []).length, 3)
+  assert.equal((listing.match(/<article /g) || []).length, lessons.filter(item => !item.hidden).length)
   for (const lesson of lessons.filter(item => !item.hidden)) {
     for (const html of [home, listing]) {
       assert.ok(html.includes(`href="/clases/${lesson.slug}"`))
@@ -42,7 +42,7 @@ test('inicio y listado muestran solo las clases visibles con su numeración orig
 })
 
 test('las clases visibles muestran su título y un enlace de regreso', () => {
-  assert.equal(new Set(lessons.map(lesson => lesson.slug)).size, 4)
+  assert.equal(new Set(lessons.map(lesson => lesson.slug)).size, lessons.length)
   for (const lesson of lessons.filter(item => !item.hidden)) {
     const html = render(`/clases/${lesson.slug}`)
     assert.ok(html.includes(`<h1 id="lesson-title">${lesson.title}</h1>`))
@@ -246,4 +246,61 @@ test('la demostración web sigue disponible', async () => {
   assert.equal((demo.match(/type="checkbox"/g) || []).length, 3)
   assert.match(demo, /class="demo-plain"/)
   assert.ok(demo.includes('sin JavaScript no muestra un mensaje'))
+})
+
+test('clase 5 muestra cinco secciones en orden, ocho prompts completos y ningún formulario', async () => {
+  const { continuingPrompts, contextPrompt, testingPrompts } = await server.ssrLoadModule('/src/data/testing.ts')
+  const html = render('/clases/testing-y-cierre')
+  const text = html.replace(/<[^>]*>/g, '')
+  const expectedSections = ['testing-build', 'testing-context', 'testing-workshop', 'testing-celebrate', 'testing-save']
+  assert.deepEqual([...html.matchAll(/<section id="([^"]+)"/g)].map(match => match[1]), expectedSections)
+  for (const heading of ['¡Sigamos construyendo!', '¿Se acabaron los mensajes? ¡Continúa en otra IA!', '¡Hora de probar nuestra página! (Testing)', '¡Ya sabes crear software con IA!', '¡No pierdas tu proyecto!']) assert.ok(html.includes(heading))
+  for (const prompt of [...continuingPrompts, ...testingPrompts]) {
+    assert.ok(text.includes(prompt.title))
+    assert.ok(text.includes(prompt.description))
+    assert.ok(text.includes(prompt.prompt))
+  }
+  assert.ok(text.includes(contextPrompt))
+  assert.equal((html.match(/>Copiar<\/button>/g) || []).length, 8)
+  assert.equal((html.match(/role="status"/g) || []).length, 8)
+  assert.ok(!/<(?:form|input|textarea|progress|details)\b|role="(?:checkbox|tab)"/.test(html))
+  assert.ok(text.includes('El resumen recupera el contexto, pero no reemplaza los archivos.'))
+  assert.ok(text.includes('No basta con que la IA diga que funciona. ¡Abre tu página y compruébalo!'))
+})
+
+test('clase 5 conserva el ciclo, los tres aprendizajes, el bonus y la despedida', async () => {
+  const { contextSteps, developmentCycle, takeaways } = await server.ssrLoadModule('/src/data/testing.ts')
+  const html = render('/clases/testing-y-cierre')
+  const text = html.replace(/<[^>]*>/g, '')
+  for (const step of contextSteps) {
+    assert.ok(text.includes(step.title))
+    assert.ok(text.includes(step.description))
+  }
+  assert.equal(developmentCycle.length, 4)
+  for (const step of developmentCycle) {
+    assert.ok(text.includes(step.title))
+    assert.ok(text.includes(step.question))
+    assert.ok(text.includes(step.prompt))
+  }
+  assert.equal(takeaways.length, 3)
+  for (const item of takeaways) {
+    assert.ok(text.includes(item.title))
+    assert.ok(text.includes(item.text))
+  }
+  for (const phrase of ['¡El ciclo continúa!', 'GitHub Copilot', 'Claude Code', 'Codex', 'límites gratuitos o requerir una suscripción', '¡Ahora puedes crear lo que imagines!', 'Videojuegos', 'Aplicaciones para teléfonos', 'Páginas web', 'Programas para robots', '¡Lo que hoy es una idea, mañana puede ser tu próxima creación!', 'Busca allí la carpeta en la que guardaste tu proyecto.', '¡Felicitaciones por llegar hasta aquí!', '¡Este es solo el comienzo de todo lo que puedes crear!']) assert.ok(text.includes(phrase))
+})
+
+test('clase 5 tiene anclas únicas, enlaces externos seguros y regreso a la clase anterior', () => {
+  const html = render('/clases/testing-y-cierre')
+  const ids = [...html.matchAll(/ id="([^"]+)"/g)].map(match => match[1])
+  assert.equal(new Set(ids).size, ids.length)
+  for (const [, anchor] of html.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.includes(anchor), `El ancla ${anchor} debe existir`)
+  const links = [...html.matchAll(/<a\b[^>]+href="(https:[^"]+)"[^>]*>/g)]
+  assert.deepEqual(links.map(match => match[1]), ['https://claude.ai/', 'https://chatgpt.com/', 'https://gemini.google.com/', 'https://github.com/features/copilot', 'https://drive.google.com/'])
+  for (const [link] of links) {
+    assert.ok(link.includes('target="_blank"'))
+    assert.ok(link.includes('rel="noopener noreferrer"'))
+  }
+  assert.ok(html.includes('href="/clases/implementacion-i"'))
+  assert.ok(render('/clases/implementacion-i').includes('id="lesson-title">Implementación I'))
 })

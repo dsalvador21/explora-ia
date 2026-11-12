@@ -338,3 +338,100 @@ h2 { font-size: clamp(25px, 2.7vw, 34px); font-weight: 800; letter-spacing: -1.2
 
 .implementation-lesson .implementation-help-prompts { margin-top: 22px; }
 .implementation-lesson #implementation-save .design-tool-button { margin-top: 20px; }
+
+/* Clase 5: probar, mejorar y celebrar lo aprendido. */
+.testing-lesson .lesson-panel > p + p { margin-top: 10px; }
+.testing-lesson section { scroll-margin-top: 24px; }
+.testing-lesson .testing-language-recap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.testing-lesson .testing-language-recap > div { min-width: 0; padding: 14px 16px; background: #f5f3ff; border: 1.5px solid #18181b; border-radius: 12px; }
+.testing-lesson .testing-language-recap > div:nth-child(2) { background: #e0f2fe; }
+.testing-lesson .testing-language-recap > div:nth-child(3) { background: #fef3c7; }
+.testing-lesson dt { font: 700 13px var(--font-mono); margin-bottom: 5px; }
+.testing-lesson dd { font-size: 12px; line-height: 1.7; color: #57575f; }
+.testing-lesson .testing-context-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding: 0; margin-block: 22px; list-style: none; }
+.testing-lesson .testing-context-steps li { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.testing-lesson .testing-context-steps h3 { font-size: 13px; letter-spacing: 0; }
+.testing-lesson .testing-context-steps p { font-size: 12px; line-height: 1.7; margin-top: 5px; }
+.testing-lesson .testing-context .prompt-text { font-size: 13px; line-height: 1.85; }
+.testing-lesson .testing-tool-links { display: flex; flex-wrap: wrap; gap: 12px; margin-block: 18px; }
+.testing-lesson .testing-file-reminder { padding-left: 14px; border-left: 4px solid #8b5cf6; font-size: 12px; }
+.testing-lesson .testing-main-panel { border-top: 7px solid #38bdf8; background: #f0f9ff; }
+.testing-lesson .testing-prompt-grid .prompt-card { background: #fff; border-top: 6px solid #8b5cf6; }
+.testing-lesson .testing-prompt-grid .prompt-card:nth-child(2) { border-top-color: #fbbf24; }
+.testing-lesson .testing-prompt-grid .prompt-card:nth-child(3) { border-top-color: #38bdf8; }
+.testing-lesson .testing-prompt-grid .prompt-card-heading { flex-wrap: wrap; gap: 10px; }
+.testing-lesson .testing-prompt-grid .prompt-text { font-size: 14px; line-height: 1.85; }
+.testing-lesson .testing-reality { margin-top: 28px; padding: 22px; background: #fef3c7; border: 2px solid #18181b; border-radius: 16px; }
+.testing-lesson .testing-reality-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.testing-lesson .testing-reality-heading > span { font-size: 30px; }
+.testing-lesson .testing-example { margin-block: 16px; padding: 16px; background: #fffdf5; border: 1.5px dashed #a16207; border-radius: 10px; }
+.testing-lesson .testing-example p + p { margin-top: 8px; }
+.testing-lesson .testing-reality-motto { color: #18181b; }
+.testing-lesson .testing-celebration { background: #f5f3ff; border-top: 7px solid #8b5cf6; }
+.testing-lesson .testing-celebration > h2 { font-size: clamp(26px, 3vw, 36px); }
+.testing-lesson .testing-cycle-block { margin-top: 30px; }
+.testing-lesson .testing-cycle-block > p { margin-top: 10px; }
+.testing-lesson .testing-cycle { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 22px; padding: 0; list-style: none; }
+.testing-lesson .testing-cycle li { position: relative; min-width: 0; padding: 18px; background: #fef3c7; border: 2px solid #18181b; border-radius: 14px; box-shadow: 3px 3px #18181b; }
+.testing-lesson .testing-cycle li:nth-child(2) { background: #ede9fe; }
+.testing-lesson .testing-cycle li:nth-child(3) { background: #e0f2fe; }
+.testing-lesson .testing-cycle li:nth-child(4) { background: #dcfce7; }
+.testing-lesson .testing-cycle-emoji { display: block; font-size: 30px; margin-bottom: 12px; }
+.testing-lesson .testing-cycle h4 { font-size: 14px; line-height: 1.6; }
+.testing-lesson .testing-cycle li p { font-size: 12px; margin-block: 8px 14px; }
+.testing-lesson .testing-cycle blockquote { margin: 0; padding-top: 12px; border-top: 1.5px dashed #71717a; font: 500 11px/1.9 var(--font-mono); }
+.testing-lesson .testing-cycle-return { display: flex; align-items: center; justify-content: center; gap: 10px; border: 2px dashed #8b5cf6; border-top: 0; border-radius: 0 0 22px 22px; padding: 14px; color: #5b21b6; font-size: 13px; font-weight: 700; }
+.testing-lesson .testing-cycle-return span { font-size: 28px; }
+.testing-lesson .testing-takeaways { margin-top: 40px; }
+.testing-lesson .testing-takeaways > h3 { max-width: 650px; font-size: clamp(22px, 2.5vw, 28px); }
+.testing-lesson .testing-takeaways ol { display: grid; gap: 16px; margin-top: 22px; padding: 0; list-style: none; }
+.testing-lesson .testing-takeaways li { display: flex; align-items: center; gap: 20px; background: #fff; border: 2px solid #18181b; border-radius: 16px; padding: 20px; box-shadow: 3px 3px #18181b; }
+.testing-lesson .testing-takeaway-number { display: grid; place-items: center; width: 54px; height: 54px; flex-shrink: 0; border: 2px solid #18181b; border-radius: 14px; background: #ddd6fe; font: 700 23px var(--font-mono); transform: rotate(-5deg); }
+.testing-lesson .testing-takeaways li:nth-child(2) .testing-takeaway-number { background: #bae6fd; transform: rotate(5deg); }
+.testing-lesson .testing-takeaways li:nth-child(3) .testing-takeaway-number { background: #fde68a; }
+.testing-lesson .testing-takeaways h4 { font-size: 18px; line-height: 1.5; margin-bottom: 6px; }
+.testing-lesson .testing-bonus { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 20px; margin-top: 36px; padding: 24px; background: #fef3c7; border: 2px solid #18181b; border-radius: 18px; box-shadow: 4px 4px #18181b; }
+.testing-lesson .testing-bonus-star { font-size: 68px; line-height: 1.1; color: #fbbf24; -webkit-text-stroke: 2px #18181b; filter: drop-shadow(3px 3px #18181b); transform: rotate(-12deg); }
+.testing-lesson .testing-bonus h3 { font-size: 20px; margin-bottom: 12px; }
+.testing-lesson .testing-agent-names { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; margin-block: 16px; }
+.testing-lesson .testing-agent-names li { padding: 5px 10px; background: #fff; border: 1.5px solid #18181b; border-radius: 8px; font: 700 11px var(--font-mono); }
+.testing-lesson .testing-bonus .lesson-link { white-space: normal; background: #ddd6fe; font-size: 13px; }
+.testing-lesson .testing-launch { position: relative; margin-top: 40px; padding: 30px; background: #e0f2fe; border: 2px solid #18181b; border-radius: 18px; text-align: center; }
+.testing-lesson .testing-launch-rocket { display: block; font-size: 64px; margin-bottom: 14px; transform: rotate(-8deg); }
+.testing-lesson .testing-launch-spark { position: absolute; top: 22px; right: 24px; font-size: 40px; color: #6d28d9; }
+.testing-lesson .testing-launch h3 { max-width: 650px; margin-inline: auto; font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; line-height: 1.2; letter-spacing: -1.2px; }
+.testing-lesson .testing-project-ideas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; list-style: none; padding: 0; margin-block: 28px; }
+.testing-lesson .testing-project-ideas li { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-width: 0; padding: 16px 10px; background: #fff; border: 1.5px solid #18181b; border-radius: 12px; font-size: 13px; font-weight: 800; line-height: 1.6; }
+.testing-lesson .testing-project-ideas li > span { font-size: 30px; }
+.testing-lesson .testing-launch p { max-width: 730px; margin-inline: auto; }
+.testing-lesson .testing-launch .testing-launch-motto { font: 700 28px/1.4 'Caveat', cursive; color: #5b21b6; margin-bottom: 14px; }
+.testing-lesson .testing-save { background: #f0fdfa; }
+.testing-lesson .testing-save .design-tool-button { margin-top: 22px; }
+.testing-lesson .testing-farewell { margin-top: 26px; border-top: 2px dashed #5b21b6; padding-top: 24px; }
+.testing-lesson .testing-farewell h3 { font-size: 23px; margin-bottom: 14px; }
+.testing-lesson .testing-farewell p + p { color: #5b21b6; margin-top: 12px; }
+.testing-lesson .testing-previous { display: inline-flex; align-items: center; gap: 10px; margin-top: 32px; }
+.testing-lesson .copy-button { min-height: 40px; }
+@media (min-width: 1024px) {
+  .testing-lesson .testing-cycle li:not(:last-child)::after { content: '→'; position: absolute; right: -22px; top: 34px; z-index: 1; font-size: 22px; font-weight: 800; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .testing-lesson .testing-context-steps, .testing-lesson .testing-cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+  .testing-lesson .testing-language-recap, .testing-lesson .testing-context-steps, .testing-lesson .testing-cycle { grid-template-columns: minmax(0, 1fr); }
+  .testing-lesson .testing-context-steps { gap: 14px; }
+  .testing-lesson .testing-language-recap > div { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+  .testing-lesson dt { margin-bottom: 0; }
+  .testing-lesson .testing-reality, .testing-lesson .testing-launch { padding: 18px; }
+  .testing-lesson .testing-cycle li:not(:last-child)::after { content: '↓'; position: absolute; bottom: -26px; left: calc(50% - 8px); z-index: 1; font-size: 22px; font-weight: 800; }
+  .testing-lesson .testing-takeaways li { padding: 16px; align-items: flex-start; gap: 12px; }
+  .testing-lesson .testing-takeaway-number { width: 36px; height: 36px; border-radius: 10px; font-size: 16px; }
+  .testing-lesson .testing-takeaways h4 { font-size: 16px; }
+  .testing-lesson .testing-bonus { grid-template-columns: minmax(0, 1fr); padding: 18px; gap: 14px; }
+  .testing-lesson .testing-bonus-star { font-size: 46px; }
+  .testing-lesson .testing-project-ideas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .testing-lesson .testing-project-ideas li { font-size: 12px; }
+  .testing-lesson .testing-tool-links .design-tool-button { font-size: 12px; gap: 8px; padding: 10px; }
+  .testing-lesson .prompt-card-heading { flex-wrap: wrap; }
+}

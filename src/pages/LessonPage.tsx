@@ -3,6 +3,7 @@ import { LessonHeader } from '../components/LessonHeader'
 import { PlanningLessonPage } from './PlanningLessonPage'
 import { DesignLessonPage } from './DesignLessonPage'
 import { ImplementationLessonPage } from './ImplementationLessonPage'
+import { TestingLessonPage } from './TestingLessonPage'
 
 export function LessonPage({ lesson }: { lesson: Lesson }) {
   if (lesson.slug === 'planificacion-y-requerimientos') return <PlanningLessonPage lesson={lesson} />
@@ -10,6 +11,8 @@ export function LessonPage({ lesson }: { lesson: Lesson }) {
   if (lesson.slug === 'diseno-de-sitios-web-con-ia') return <DesignLessonPage lesson={lesson} />
 
   if (lesson.slug === 'implementacion-i') return <ImplementationLessonPage lesson={lesson} />
+
+  if (lesson.slug === 'testing-y-cierre') return <TestingLessonPage lesson={lesson} />
 
   return (
     <article className={`lesson-page theme-${lesson.theme}`} aria-labelledby="lesson-title">

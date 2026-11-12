@@ -1,10 +1,15 @@
 const tools = {
+  claude: { label: 'Abrir Claude', href: 'https://claude.ai/' },
+  chatgpt: { label: 'Abrir ChatGPT', href: 'https://chatgpt.com/' },
   gemini: { label: 'Abrir Google Gemini', href: 'https://gemini.google.com/' },
   stitch: { label: 'Abrir Google Stitch', href: 'https://stitch.withgoogle.com/' },
   drive: { label: 'Abrir Google Drive', href: 'https://drive.google.com/' },
 }
 
 function ToolIcon({ tool }: { tool: keyof typeof tools }) {
+  if (tool === 'claude') return <img src="/claude-logo.svg" width="22" height="22" alt="" />
+  if (tool === 'chatgpt') return <img src="/chatgpt-logo.png" width="22" height="22" alt="" />
+
   // Ícono publicado por Stitch: https://www.gstatic.com/labs-code/stitch/favicon-48x48.png
   if (tool === 'stitch') return <img src="/stitch-logo.png" width="22" height="22" alt="" />
 
